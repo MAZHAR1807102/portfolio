@@ -1,0 +1,6 @@
+# Keep private and non-site files out of the deployment
+*.pdf
+github-profile/
+.DS_Store
+.env*
+.gitignore

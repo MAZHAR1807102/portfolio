@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mazharul Islam · Lecturer &amp; Researcher</title>
+  <meta name="description" content="Mazharul Islam — Lecturer in Computer Science and Engineering. Research in network and IoT security, intrusion detection, mobile ad hoc networks and machine learning.">
+  <meta property="og:title" content="Mazharul Islam · Lecturer & Researcher">
+  <meta property="og:description" content="Research in network and IoT security, intrusion detection and machine learning.">
+  <meta property="og:image" content="assets/photo.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1f3a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='700' fill='%2334d1bf' text-anchor='middle'%3EMI%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    document.documentElement.classList.add('js');
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="monogram">MI</span><span class="brand-name">Mazharul Islam</span></a>
+    <nav id="menu" class="menu">
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="top">
+  <canvas id="network" aria-hidden="true"></canvas>
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow"><span class="dot"></span> Lecturer · Researcher · Educator</p>
+      <h1>Mazharul Islam</h1>
+      <p class="hero-rotate">
+        Researching <span class="rotator" data-words="Network Security|IoT Intrusion Detection|Mobile Ad Hoc Networks|Machine Learning">Network Security</span>
+      </p>
+      <p class="hero-lead">
+        Lecturer at Imperial College of Engineering, Khulna. I build machine-learning
+        defences for networked systems and have been teaching computer science since 2018.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#publications">View publications</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+      <ul class="socials">
+        <li><a href="mailto:imazharul175@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a></li>
+        <li><a href="https://scholar.google.com/citations?user=BxSurLEAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Google Scholar"><svg viewBox="0 0 24 24"><path d="M12 3 2 9l10 6 10-6-10-6z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg></a></li>
+        <li><a href="https://www.linkedin.com/in/mazharul-islam-ba946320a/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a></li>
+        <li><a href="https://github.com/MAZHAR1807102" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li>
+      </ul>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-ring">
+        <img src="assets/photo.jpg" alt="Portrait of Mazharul Islam" width="260" height="260">
+      </div>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#stats" aria-label="Scroll down"><span></span></a>
+</section>
+
+<!-- ===== Stats ===== -->
+<section class="stats" id="stats">
+  <div class="wrap stats-grid">
+    <div class="stat reveal">
+      <span class="stat-num"><span class="count" data-from-year="2018">8</span>+</span>
+      <span class="stat-label">Years teaching</span>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">IEEE</span>
+      <span class="stat-label">Published researcher</span>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num"><span class="count" data-to="5">5</span>+</span>
+      <span class="stat-label">Software projects</span>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">KUET</span>
+      <span class="stat-label">B.Sc. in CSE</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- ===== Research ===== -->
+  <section id="research" class="section">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <span class="section-num">01</span>
+        <h2>Research</h2>
+        <p class="section-sub">I work where networking meets security and machine learning: detecting attacks and keeping data trustworthy as it moves through networks.</p>
+      </header>
+
+      <div class="interests">
+        <article class="interest reveal">
+          <span class="interest-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3>Network &amp; IoT Security</h3>
+          <p>Protecting connected devices and the traffic between them.</p>
+        </article>
+        <article class="interest reveal">
+          <span class="interest-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v3l2 2"/></svg></span>
+          <h3>Intrusion Detection</h3>
+          <p>Machine-learning models that spot malicious traffic quickly and reliably.</p>
+        </article>
+        <article class="interest reveal">
+          <span class="interest-icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="12" cy="12" r="2"/><path d="M7 12h3M13.6 10.8l3.8-4.6M13.6 13.2l3.8 4.6"/></svg></span>
+          <h3>Mobile Ad Hoc Networks</h3>
+          <p>Secure routing in networks without fixed infrastructure.</p>
+        </article>
+        <article class="interest reveal">
+          <span class="interest-icon"><svg viewBox="0 0 24 24"><path d="M9 3a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a2 2 0 0 0-3-2z"/><path d="M15 3a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/></svg></span>
+          <h3>Machine Learning</h3>
+          <p>Ensemble and boosting methods for security and real-world data.</p>
+        </article>
+      </div>
+
+      <article class="thesis reveal">
+        <div class="thesis-label">Undergraduate thesis · KUET</div>
+        <h3>Secure and Reliable Data Forwarding Against Blackhole and Wormhole Attacks in Mobile Ad Hoc Networks</h3>
+        <p>
+          A data forwarding scheme for MANETs that avoids both blackhole and wormhole attacks.
+          It builds on the AOMDV multipath routing protocol and adds an enhanced homomorphic
+          cryptosystem (Gorti) that supports both additive and multiplicative operations with
+          keys of up to 2048 bits, protecting data integrity in transit.
+        </p>
+        <ul class="chips"><li>AOMDV</li><li>Homomorphic encryption</li><li>NS-2.35 simulation</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Publications ===== -->
+  <section id="publications" class="section section-alt">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <span class="section-num">02</span>
+        <h2>Publications</h2>
+        <p class="section-sub">Peer-reviewed work, newest first. Full list and citations on <a href="https://scholar.google.com/citations?user=BxSurLEAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar →</a></p>
+      </header>
+
+      <!--
+        Add one <li class="pub reveal"> per paper, newest first. Copy the block below,
+        change the text, and update the BibTeX inside <pre class="bib">.
+      -->
+      <ol class="pubs">
+        <li class="pub reveal">
+          <div class="pub-year">2026</div>
+          <div class="pub-body">
+            <div class="pub-badges"><span class="badge badge-accent">IEEE</span><span class="badge">Conference</span></div>
+            <h3 class="pub-title">Robust and Efficient: A Boosting-Based Intrusion Detection Framework for IoT Networks on CICIoT2023 Dataset</h3>
+            <p class="pub-authors"><strong>Mazharul Islam</strong>, Puspita Singha</p>
+            <p class="pub-venue">2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence &amp; Networking (QPAIN), pp. 1–6</p>
+            <div class="pub-actions">
+              <a class="pill" href="https://doi.org/10.1109/QPAIN69676.2026.11545584" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>DOI
+              </a>
+              <button class="pill cite-btn" aria-expanded="false">
+                <svg viewBox="0 0 24 24"><path d="M7 7h4v4c0 3-1.5 5-4 6M15 7h4v4c0 3-1.5 5-4 6"/></svg>Cite
+              </button>
+            </div>
+            <div class="bib-wrap" hidden>
+<pre class="bib">@inproceedings{islam2026robust,
+  author    = {Islam, Mazharul and Singha, Puspita},
+  title     = {Robust and Efficient: A Boosting-Based Intrusion Detection
+               Framework for {IoT} Networks on {CICIoT2023} Dataset},
+  booktitle = {2026 IEEE 2nd International Conference on Quantum Photonics,
+               Artificial Intelligence \& Networking (QPAIN)},
+  year      = {2026},
+  pages     = {1--6},
+  doi       = {10.1109/QPAIN69676.2026.11545584}
+}</pre>
+              <button class="copy-btn">Copy BibTeX</button>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Experience & Education ===== -->
+  <section id="experience" class="section">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <span class="section-num">03</span>
+        <h2>Experience &amp; Education</h2>
+      </header>
+
+      <div class="two-col">
+        <div>
+          <h3 class="col-title">Teaching</h3>
+          <ol class="timeline">
+            <li class="reveal">
+              <span class="when">Jun 2024 – present</span>
+              <h4>Lecturer</h4>
+              <p class="where">Imperial College of Engineering, Khulna</p>
+            </li>
+            <li class="reveal">
+              <span class="when">Feb 2018 – present</span>
+              <h4>Instructor</h4>
+              <p class="where">Udvash Coaching Centre, Khulna</p>
+              <p>Where I found my commitment to teaching as a profession.</p>
+            </li>
+          </ol>
+        </div>
+        <div>
+          <h3 class="col-title">Education</h3>
+          <ol class="timeline">
+            <li class="reveal">
+              <span class="when">2019 – 2024</span>
+              <h4>B.Sc. in Computer Science and Engineering</h4>
+              <p class="where">Khulna University of Engineering &amp; Technology (KUET)</p>
+            </li>
+            <li class="reveal">
+              <span class="when">2016 – 2018</span>
+              <h4>Higher Secondary Certificate · GPA 5.00</h4>
+              <p class="where">Bangladesh Navy College, Khulna</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="two-col honors">
+        <article class="mini-card reveal">
+          <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7"/></svg>Awards &amp; Scholarships</h3>
+          <ul>
+            <li>Technical Scholarship, KUET, every semester</li>
+            <li>Education Board Scholarships in PSC, JSC and SSC examinations</li>
+          </ul>
+        </article>
+        <article class="mini-card reveal">
+          <h3><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></svg>Service &amp; Leadership</h3>
+          <ul>
+            <li>Organizing Secretary, Organization of KUET Sports (OKS)</li>
+            <li>Batch Representative, Hardware Acceleration Club of KUET (HACK)</li>
+            <li>Executive Member, KUET Photography Society</li>
+            <li>Member, KUET Football Team</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Projects ===== -->
+  <section id="projects" class="section section-alt">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <span class="section-num">04</span>
+        <h2>Selected Projects</h2>
+        <p class="section-sub">Software I've designed and built across web, mobile, desktop and graphics.</p>
+      </header>
+      <div class="projects">
+        <article class="project reveal">
+          <h3>Online Examination System</h3>
+          <p>Lets institutions run MCQ and written exams remotely, with separate student, teacher and admin panels, question management and configurable timers.</p>
+          <ul class="chips"><li>Java</li></ul>
+        </article>
+        <article class="project reveal">
+          <h3>Riksa Mama</h3>
+          <p>A rickshaw booking app with in-app payment. Rider and passenger data are stored in Firebase.</p>
+          <ul class="chips"><li>Android</li><li>Firebase</li></ul>
+        </article>
+        <article class="project reveal">
+          <h3>Doctor Finder</h3>
+          <p>A web app with doctor and patient profiles, category search and appointment booking, plus a database version using PL/SQL, views, indexing and transactions.</p>
+          <ul class="chips"><li>ASP.NET</li><li>C#</li><li>Oracle PL/SQL</li></ul>
+        </article>
+        <article class="project reveal">
+          <h3>Daily Task Manager</h3>
+          <p>An iOS app for tracking daily activities.</p>
+          <ul class="chips"><li>Swift</li><li>iOS</li></ul>
+        </article>
+        <article class="project reveal">
+          <h3>KUET Cafeteria</h3>
+          <p>A computer graphics scene of the KUET cafeteria.</p>
+          <ul class="chips"><li>C++</li><li>OpenGL</li></ul>
+        </article>
+        <a class="project project-cta reveal" href="https://github.com/MAZHAR1807102" target="_blank" rel="noopener">
+          <span class="cta-icon"><svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></span>
+          <h3>More on GitHub</h3>
+          <p>Browse all my repositories, code and coursework projects.</p>
+          <span class="cta-link">github.com/MAZHAR1807102 →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact" class="section">
+    <div class="wrap">
+      <div class="contact-card reveal">
+        <span class="section-num">05</span>
+        <h2>Let's work together</h2>
+        <p>I'm open to research collaborations and always happy to hear from students and colleagues.</p>
+        <div class="contact-actions">
+          <a class="btn btn-primary btn-lg" href="mailto:imazharul175@gmail.com">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            imazharul175@gmail.com
+          </a>
+          <a class="btn btn-ghost btn-lg" href="https://www.linkedin.com/in/mazharul-islam-ba946320a/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>LinkedIn</a>
+          <a class="btn btn-ghost btn-lg" href="https://github.com/MAZHAR1807102" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>GitHub</a>
+        </div>
+        <p class="contact-loc">Khulna, Bangladesh</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>© <span id="year">2026</span> Mazharul Islam</p>
+    <nav class="footer-links">
+      <a href="https://github.com/MAZHAR1807102" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/mazharul-islam-ba946320a/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=BxSurLEAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="#top" class="to-top">Back to top ↑</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

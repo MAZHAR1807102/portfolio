@@ -1,0 +1,9 @@
+# Private: CV contains National ID and family details
+*.pdf
+
+# Vercel local config and secrets
+.vercel
+.env*
+
+# macOS
+.DS_Store

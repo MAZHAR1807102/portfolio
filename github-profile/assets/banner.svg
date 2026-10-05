@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Mazharul Islam — Lecturer, Researcher, Educator">
+  <style>
+    .fade { opacity: 0; animation: fadeUp .9s ease forwards; }
+    .d1 { animation-delay: .1s; } .d2 { animation-delay: .35s; } .d3 { animation-delay: .6s; } .d4 { animation-delay: .85s; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .edge { stroke: #1D4E89; stroke-opacity: .22; stroke-width: 1.5; }
+    .node { fill: #ffffff; stroke: #1D4E89; stroke-width: 2.5; }
+    .core { fill: #1D4E89; }
+    .packet { fill: #1D4E89; }
+    .threat-edge { stroke: #c0392b; stroke-width: 1.5; stroke-dasharray: 5 5; animation: dash 1s linear infinite, blink 2.4s ease-in-out infinite; }
+    @keyframes dash { to { stroke-dashoffset: -20; } }
+    @keyframes blink { 0%, 100% { stroke-opacity: .15; } 50% { stroke-opacity: .8; } }
+    .ring { fill: none; stroke: #c0392b; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ping 2.4s ease-out infinite; }
+    @keyframes ping { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
+    .pulse { transform-box: fill-box; transform-origin: center; animation: pulse 3s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+    .shield { transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-in-out infinite; }
+  </style>
+
+  <!-- Card -->
+  <defs><clipPath id="card"><rect x="1" y="1" width="1198" height="298" rx="18"/></clipPath></defs>
+  <rect x="1" y="1" width="1198" height="298" rx="18" fill="#ffffff" stroke="#e5e8ee" stroke-width="2"/>
+  <rect x="0" y="0" width="9" height="300" fill="#1D4E89" clip-path="url(#card)"/>
+
+  <!-- Text -->
+  <g font-family="Georgia, 'Times New Roman', serif">
+    <text class="fade d1" x="64" y="92" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3" fill="#1D4E89">LECTURER · RESEARCHER · EDUCATOR</text>
+    <text class="fade d2" x="62" y="158" font-size="58" font-weight="700" fill="#111827">Mazharul Islam</text>
+    <text class="fade d3" x="64" y="200" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#5b6474">Network Security · IoT Intrusion Detection · Machine Learning</text>
+    <g class="fade d4">
+      <rect x="64" y="226" width="36" height="3" rx="1.5" fill="#1D4E89"/>
+      <text x="112" y="232" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#5b6474">Imperial College of Engineering, Khulna</text>
+    </g>
+  </g>
+
+  <!-- Network -->
+  <g>
+    <line class="edge" x1="760" y1="90" x2="860" y2="60"/>
+    <line class="edge" x1="860" y1="60" x2="960" y2="120"/>
+    <line class="edge" x1="960" y1="120" x2="1080" y2="80"/>
+    <line class="edge" x1="1080" y1="80" x2="1140" y2="150"/>
+    <line class="edge" x1="760" y1="90" x2="820" y2="190"/>
+    <line class="edge" x1="820" y1="190" x2="930" y2="220"/>
+    <line class="edge" x1="930" y1="220" x2="1050" y2="200"/>
+    <line class="edge" x1="1050" y1="200" x2="1140" y2="150"/>
+    <line class="edge" x1="960" y1="120" x2="930" y2="220"/>
+    <line class="edge" x1="960" y1="120" x2="1050" y2="200"/>
+    <line class="edge" x1="860" y1="60" x2="820" y2="190"/>
+
+    <!-- Intrusion attempt, flagged -->
+    <line class="threat-edge" x1="930" y1="220" x2="1010" y2="268"/>
+    <circle class="ring" cx="1010" cy="268" r="9"/>
+    <circle cx="1010" cy="268" r="7" fill="#c0392b"/>
+
+    <!-- Data packets travelling the network -->
+    <circle class="packet" r="4">
+      <animateMotion dur="5s" repeatCount="indefinite" path="M760,90 L860,60 L960,120 L1080,80 L1140,150"/>
+    </circle>
+    <circle class="packet" r="4">
+      <animateMotion dur="4.2s" begin="1s" repeatCount="indefinite" path="M820,190 L930,220 L1050,200 L1140,150"/>
+    </circle>
+    <circle class="packet" r="4">
+      <animateMotion dur="6s" begin="2s" repeatCount="indefinite" path="M760,90 L820,190 L930,220 L960,120 L1050,200"/>
+    </circle>
+    <circle class="packet" r="3.5">
+      <animateMotion dur="4.8s" begin=".5s" repeatCount="indefinite" path="M1140,150 L1080,80 L960,120 L860,60 L760,90"/>
+    </circle>
+
+    <!-- Nodes -->
+    <circle class="node" cx="760" cy="90" r="9"/>
+    <circle class="node" cx="860" cy="60" r="8"/>
+    <circle class="node" cx="1080" cy="80" r="8"/>
+    <circle class="node" cx="820" cy="190" r="8"/>
+    <circle class="node" cx="930" cy="220" r="9"/>
+    <circle class="node" cx="1050" cy="200" r="8"/>
+    <circle class="node" cx="1140" cy="150" r="9"/>
+    <circle class="core pulse" cx="760" cy="90" r="3.5"/>
+    <circle class="core pulse" cx="1140" cy="150" r="3.5"/>
+
+    <!-- Central secured node with shield -->
+    <circle cx="960" cy="120" r="22" fill="#1D4E89"/>
+    <path class="shield" d="M960 107 l-10 4 v7 c0 6.5 4.3 10.8 10 12 5.7-1.2 10-5.5 10-12 v-7 z" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M955.5 119.5 l3.2 3.2 6-6" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

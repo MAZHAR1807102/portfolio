@@ -290,6 +290,8 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .project-tag { align-self: flex-start; font-size: .75rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
 .project-points { margin: 14px 0 6px; padding-left: 20px; color: var(--muted); font-size: .94rem; display: grid; gap: 6px; max-width: 80ch; }
 .project-points li::marker { color: var(--accent); }
+.project-link { align-self: flex-start; margin-top: 16px; text-decoration: none; }
+.project-link:hover { text-decoration: underline; }
 
 .project-cta {
   justify-content: center; align-items: flex-start; color: var(--text);

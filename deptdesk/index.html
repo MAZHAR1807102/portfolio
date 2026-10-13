@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="DeptDesk: one portal for a university department's fees, attendance, CT marks, results and exam paperwork.">
+<title>DeptDesk Department Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: an exam-office register — ruled sheets, roll numbers in mono, one highlighter-yellow mark per section. */
+:root {
+  --paper: #fbfcfa;
+  --sheet: #ffffff;
+  --ink: #12261d;
+  --ink-soft: #4b5f55;
+  --rule: #d8e2dc;
+  --green: #0f5c3c;
+  --green-soft: #e3f0e8;
+  --mark: #ffe25c;
+  --mark-ink: #3b3000;
+  --red: #b4232a;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --shadow: 0 1px 0 rgba(18, 38, 29, .04), 0 12px 32px -18px rgba(18, 38, 29, .35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0d1612; --sheet: #14211b; --ink: #e6efe9; --ink-soft: #9fb3a8; --rule: #26372f;
+    --green: #5cc896; --green-soft: #183327; --mark: #f5d53f; --mark-ink: #2a2200; --red: #f07a7f;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 14px 34px -18px rgba(0,0,0,.8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0d1612; --sheet: #14211b; --ink: #e6efe9; --ink-soft: #9fb3a8; --rule: #26372f;
+  --green: #5cc896; --green-soft: #183327; --mark: #f5d53f; --mark-ink: #2a2200; --red: #f07a7f;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 14px 34px -18px rgba(0,0,0,.8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.015em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; border-radius: 4px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.mark { background: linear-gradient(transparent 55%, var(--mark) 55%, var(--mark) 92%, transparent 92%); color: inherit; padding-inline: .08em; }
+:root[data-theme="dark"] .mark { color: inherit; }
+.eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--green); font-weight: 600; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; padding: 13px 20px; border-radius: 10px; text-decoration: none; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; transition: transform .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--ink); }
+
+/* nav */
+.nav { border-bottom: 1px solid var(--rule); background: var(--paper); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 22px; text-decoration: none; }
+.logo svg { width: 34px; height: 34px; flex: none; }
+.nav .btn { padding: 9px 16px; font-size: 15px; }
+
+/* hero */
+.hero { padding-block: 64px 56px; }
+.hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 800; margin-top: 14px; }
+.hero .lede { font-size: 19.5px; color: var(--ink-soft); margin-top: 20px; max-width: 34em; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.roles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.roles span { font-family: var(--mono); font-size: 12.5px; padding: 5px 10px; border: 1px solid var(--rule); border-radius: 999px; background: var(--sheet); color: var(--ink-soft); }
+
+/* hero mock: a student profile card on top of a tabulation sheet */
+.stack { position: relative; min-width: 0; padding-bottom: 40px; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; box-shadow: var(--shadow); }
+.tab-sheet { padding: 18px 18px 14px; transform: rotate(-1.6deg); }
+.tab-sheet .t-head { display: flex; justify-content: space-between; gap: 8px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.tab-scroll { overflow-x: auto; }
+.tab-sheet table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 6px; }
+.tab-sheet th, .tab-sheet td { text-align: center; padding: 6px 4px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+.tab-sheet th { color: var(--ink-soft); font-weight: 500; }
+.tab-sheet td:first-child { text-align: left; }
+.tab-sheet .f { color: var(--red); font-weight: 600; }
+.profile { position: absolute; right: -8px; bottom: 0; width: min(330px, 86%); padding: 18px; transform: rotate(1.4deg); }
+.profile .who { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 46px; height: 46px; border-radius: 12px; background: var(--green); color: var(--paper); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 18px; flex: none; }
+.profile .name { font-weight: 700; line-height: 1.2; }
+.profile .sub { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.stat { border: 1px solid var(--rule); border-radius: 10px; padding: 8px 10px; }
+.stat b { display: block; font-family: var(--display); font-size: 22px; font-variant-numeric: tabular-nums; }
+.stat small { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); font-weight: 600; }
+.stat .ok { color: var(--green); } .stat .due { color: var(--red); }
+.example { position: absolute; top: -12px; left: 18px; font-family: var(--mono); font-size: 11px; background: var(--mark); color: var(--mark-ink); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+
+/* "fits your rules" strip */
+.rules { border-block: 1px solid var(--rule); background: var(--sheet); }
+.rules .wrap { display: grid; grid-template-columns: repeat(4, 1fr); padding-block: 26px; gap: 24px; }
+.rule-item { min-width: 0; }
+.rule-item b { font-family: var(--display); font-size: 30px; display: block; line-height: 1.1; }
+.rule-item span { font-size: 15px; color: var(--ink-soft); }
+
+/* sections */
+section.block { padding-block: 84px; }
+.sec-head { max-width: 46em; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(30px, 4.2vw, 46px); font-weight: 800; margin-top: 10px; }
+.sec-head p { margin-top: 14px; font-size: 18.5px; color: var(--ink-soft); }
+
+/* role desks */
+.desks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 2px solid var(--ink); }
+.desk { padding: 26px 24px 28px 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.desk:nth-child(3n+2), .desk:nth-child(3n+3) { padding-left: 24px; border-left: 1px solid var(--rule); }
+.desk .who { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); font-weight: 600; }
+.desk h3 { font-size: 22px; margin-top: 8px; }
+.desk ul { margin: 12px 0 0; padding-left: 18px; color: var(--ink-soft); font-size: 16px; }
+.desk li + li { margin-top: 4px; }
+
+/* feature rows */
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 44px; border-top: 1px solid var(--rule); }
+.feature:nth-of-type(even) .copy { order: 2; }
+.feature .copy { min-width: 0; }
+.feature h3 { font-size: clamp(26px, 3.2vw, 34px); margin-top: 10px; }
+.feature p { margin-top: 14px; color: var(--ink-soft); }
+.ticks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.ticks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.ticks svg { width: 20px; height: 20px; margin-top: 3px; color: var(--green); }
+.visual { min-width: 0; }
+
+/* small UI mocks */
+.mock { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; box-shadow: var(--shadow); padding: 18px; position: relative; }
+.mock h4 { margin: 0 0 12px; font-size: 14px; font-weight: 700; display: flex; justify-content: space-between; gap: 8px; }
+.mock h4 span { font-family: var(--mono); font-weight: 500; color: var(--ink-soft); font-size: 12px; }
+.ledger { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ledger td { padding: 9px 4px; border-bottom: 1px solid var(--rule); }
+.ledger td:last-child { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ledger .in { color: var(--green); }
+.ledger tr:last-child td { border-bottom: 0; font-weight: 700; }
+.pill { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 2px 7px; border-radius: 999px; background: var(--green-soft); color: var(--green); font-weight: 600; }
+.pill.warn { background: var(--mark); color: var(--mark-ink); }
+.checks { display: grid; gap: 10px; font-size: 15px; }
+.checks div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 10px; }
+.ct { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.ct th, .ct td { padding: 8px 6px; border-bottom: 1px solid var(--rule); text-align: center; white-space: nowrap; }
+.ct th { color: var(--ink-soft); font-weight: 500; }
+.ct td:first-child, .ct th:first-child { text-align: left; }
+.ct .cell { display: inline-block; min-width: 34px; padding: 2px 6px; border: 1px solid var(--rule); border-radius: 6px; }
+.doc { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+.doc .page { width: 92px; aspect-ratio: 210 / 297; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); padding: 8px 7px; display: grid; gap: 4px; align-content: start; }
+.doc .page i { display: block; height: 4px; border-radius: 2px; background: var(--rule); }
+.doc .page i.h { background: var(--ink); width: 70%; justify-self: center; }
+.doc .files { display: grid; gap: 8px; font-size: 14.5px; min-width: 0; }
+.doc .files div { display: flex; justify-content: space-between; gap: 10px; padding: 9px 12px; border: 1px solid var(--rule); border-radius: 10px; }
+.doc .files span { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; }
+.step { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; min-width: 0; }
+.step::before { counter-increment: s; content: "Step " counter(s); font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); font-weight: 600; }
+.step h3 { font-size: 21px; margin-top: 8px; }
+.step p { margin-top: 8px; color: var(--ink-soft); font-size: 16px; }
+
+/* trust */
+.trust { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 48px; }
+.trust div { padding-block: 18px; border-top: 1px solid var(--rule); min-width: 0; }
+.trust b { display: block; font-size: 18px; }
+.trust span { color: var(--ink-soft); font-size: 16px; }
+
+/* CTA */
+.cta { background: var(--ink); color: var(--paper); border-radius: 22px; padding: 56px 48px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; }
+.cta h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; }
+.cta p { margin-top: 14px; opacity: .85; font-size: 18px; }
+.cta .mark { color: var(--paper); }
+.contact { background: var(--paper); color: var(--ink); border-radius: 14px; padding: 22px; display: grid; gap: 12px; min-width: 0; }
+.contact .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+.contact .row:last-of-type { border-bottom: 0; padding-bottom: 0; }
+.contact small { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.contact .val { font-weight: 700; overflow-wrap: anywhere; }
+.contact .note { font-size: 13px; color: var(--ink-soft); }
+.copy-btn { font: 600 13px var(--body); border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); border-radius: 8px; padding: 5px 10px; cursor: pointer; white-space: nowrap; }
+
+footer { padding-block: 40px 56px; color: var(--ink-soft); font-size: 14.5px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .feature, .cta { grid-template-columns: 1fr; }
+  .feature:nth-of-type(even) .copy { order: 0; }
+  .rules .wrap { grid-template-columns: repeat(2, 1fr); }
+  .desks { grid-template-columns: 1fr 1fr; }
+  .desk, .desk:nth-child(3n+2), .desk:nth-child(3n+3) { padding: 24px 20px 24px 0; border-left: 0; }
+  .desk:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--rule); }
+  .steps { grid-template-columns: 1fr; }
+  .cta { padding: 40px 28px; }
+}
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .hero { padding-block: 40px 36px; }
+  .desks, .trust { grid-template-columns: 1fr; }
+  .desk, .desk:nth-child(even) { padding: 22px 0; border-left: 0; }
+  .profile { position: relative; right: auto; width: 100%; margin-top: -24px; }
+  .stack { padding-bottom: 0; }
+  section.block { padding-block: 60px; }
+  .nav .tag { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tab-sheet, .profile { animation: settle .7s cubic-bezier(.2,.7,.2,1) both; }
+  .profile { animation-delay: .12s; }
+  @keyframes settle { from { transform: translateY(10px) rotate(0deg); } }
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="DeptDesk home">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" fill="var(--ink)"/><path d="M9 11h16M9 17h16M9 23h10" stroke="var(--paper)" stroke-width="2.4" stroke-linecap="round"/><rect x="21" y="20" width="6" height="6" rx="1.5" fill="var(--mark)"/></svg>
+      DeptDesk
+    </a>
+    <a class="btn" href="#demo">Book a demo</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">For university &amp; affiliated-college departments</p>
+        <h1>Run your whole department from <span class="mark">one portal</span>.</h1>
+        <p class="lede">Fees, attendance, CT marks, results, roll sheets and student records in one place. The HOD sees everything. Every other office sees only its own work. Students see their own results and dues from their phone.</p>
+        <div class="ctas">
+          <a class="btn" href="#demo">Book a live demo</a>
+          <a class="btn ghost" href="#desks">See what each office gets</a>
+        </div>
+        <div class="roles" aria-label="Built-in roles">
+          <span>Head of Department</span><span>Finance</span><span>Academic</span><span>Exam office</span><span>Teachers</span><span>Students</span>
+        </div>
+      </div>
+
+      <div class="stack" aria-label="Example screens">
+        <div class="sheet tab-sheet">
+          <div class="t-head"><span>Tabulation sheet · 2nd Yr 1st Sem</span><span>imported</span></div>
+          <div class="tab-scroll">
+            <table>
+              <thead><tr><th>Roll</th><th>CSE2111</th><th>CSE2121</th><th>MATH2131</th><th>GPA</th></tr></thead>
+              <tbody>
+                <tr><td>2438520101</td><td>A</td><td>A-</td><td>B+</td><td>3.58</td></tr>
+                <tr><td>2438520102</td><td>B+</td><td>A</td><td>A-</td><td>3.52</td></tr>
+                <tr><td>2438520103</td><td class="f">F</td><td>B</td><td>B+</td><td>2.41</td></tr>
+                <tr><td>2438520104</td><td>A+</td><td>A</td><td>A</td><td>3.86</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="sheet profile">
+          <span class="example">Example data</span>
+          <div class="who">
+            <div class="avatar">TR</div>
+            <div><p class="name">Tanvir Rahman</p><p class="sub mono">RU 2438520101 · Semester 3</p></div>
+          </div>
+          <div class="stats">
+            <div class="stat"><small>CGPA</small><b>3.58</b></div>
+            <div class="stat"><small>Credits</small><b>41<span style="font-size:14px;color:var(--ink-soft)"> / 160</span></b></div>
+            <div class="stat"><small>Attendance</small><b class="ok">82%</b></div>
+            <div class="stat"><small>Fees due</small><b class="due">৳4,500</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rules" aria-label="Built around your rules">
+    <div class="wrap">
+      <div class="rule-item"><b class="mono">60%</b><span>attendance + no dues = exam eligible, with a coordinator override</span></div>
+      <div class="rule-item"><b class="mono">160</b><span>credits tracked to graduation, with running CGPA after every result</span></div>
+      <div class="rule-item"><b>Regular / Readd</b><span>batches sorted automatically every semester</span></div>
+      <div class="rule-item"><b>বাংলা</b><span>Bangla names on roll sheets, including old Bijoy-font files</span></div>
+    </div>
+  </div>
+
+  <section class="block" id="desks">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">One login per office</p>
+        <h2>Every office gets its own desk</h2>
+        <p>Each person signs in and lands on the work that is theirs. Finance can't change marks. Teachers can't see fees. Students see only their own record.</p>
+      </div>
+      <div class="desks">
+        <div class="desk"><p class="who">Head of Department</p><h3>The whole picture</h3><ul><li>Every office's screens in one place</li><li>Uncollected fees, eligibility and results at a glance</li><li>Final say on every record</li></ul></div>
+        <div class="desk"><p class="who">Finance</p><h3>Fees without double billing</h3><ul><li>Bill monthly, semester and exam fees to a whole batch at once</li><li>Take full or partial payments</li><li>Attendance fines applied in one click</li></ul></div>
+        <div class="desk"><p class="who">Academic office</p><h3>Students, courses, attendance</h3><ul><li>Add students and their logins together</li><li>Record attendance course by course</li><li>Send notices to every student</li></ul></div>
+        <div class="desk"><p class="who">Exam office</p><h3>Results and exam paperwork</h3><ul><li>Import the university's result sheet</li><li>Check exam eligibility for a whole batch</li><li>Print roll sheets and signature lists</li></ul></div>
+        <div class="desk"><p class="who">Teachers</p><h3>CT marks from an email link</h3><ul><li>No password to remember</li><li>Only their own courses and students</li><li>Marks go straight to the student's profile</li></ul></div>
+        <div class="desk"><p class="who">Students</p><h3>Their record on their phone</h3><ul><li>Results for every semester, CGPA chart</li><li>Payment history and current dues</li><li>Attendance, CT marks and notices</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">What it does</p>
+        <h2>The jobs that eat your office's week, done in minutes</h2>
+      </div>
+
+      <article class="feature">
+        <div class="copy">
+          <p class="eyebrow">Results</p>
+          <h3>Upload the university's tabulation sheet. CGPA updates itself.</h3>
+          <p>Drop in the result sheet as PDF or Excel. The portal reads every roll, grade and GPA, keeps only your department's students, and works out course credits from the printed GPAs.</p>
+          <ul class="ticks">
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Retakes and improvements count the best grade</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Running CGPA and credits earned after every semester</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Every correction is kept in a history with the reason</span></li>
+          </ul>
+        </div>
+        <div class="visual">
+          <div class="mock">
+            <h4>Results preview <span>before publishing</span></h4>
+            <div class="checks">
+              <div><span>Students found in sheet</span><b class="mono">41</b></div>
+              <div><span>Printed GPAs reproduced</span><span class="pill">41 / 41 match</span></div>
+              <div><span>Course credits worked out</span><span class="pill">9 courses</span></div>
+              <div><span>Rolls from other colleges</span><span class="pill warn">skipped</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="copy">
+          <p class="eyebrow">Finance</p>
+          <h3>A fee ledger that can't charge a student twice</h3>
+          <p>Every bill, payment, fine and correction is a line in the student's ledger. Balances add up from those lines, so nothing goes missing and nothing gets billed twice for the same semester.</p>
+          <ul class="ticks">
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Students pay monthly or all at once</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Batch billing skips anyone already billed</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Students see the same history on their phone</span></li>
+          </ul>
+        </div>
+        <div class="visual">
+          <div class="mock">
+            <span class="example">Example data</span>
+            <h4>Ledger · Tanvir Rahman <span>RU 2438520101</span></h4>
+            <table class="ledger">
+              <tr><td>Monthly fee × 6 <span class="pill">billed</span></td><td>৳12,000</td></tr>
+              <tr><td>Semester fee <span class="pill">billed</span></td><td>৳5,000</td></tr>
+              <tr><td>Payment, bKash</td><td class="in">− ৳8,000</td></tr>
+              <tr><td>Payment, cash</td><td class="in">− ৳4,500</td></tr>
+              <tr><td>Balance due</td><td>৳4,500</td></tr>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="copy">
+          <p class="eyebrow">Exam office</p>
+          <h3>Roll sheets in the university's layout, in one click</h3>
+          <p>Pick the semester and the portal lists every examinee in the right order: the regular batch first, then readd students, then backlog students with only the courses they still need to clear. Download a ready Word file with your college letterhead.</p>
+          <ul class="ticks">
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bangla name, mother's and father's names on every row</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Import those details from roll sheets you already have</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Eligibility checked for the whole batch before the exam</span></li>
+          </ul>
+        </div>
+        <div class="visual">
+          <div class="mock doc">
+            <div class="page" aria-hidden="true"><i class="h"></i><i></i><i></i><i style="width:60%"></i><i></i><i></i><i style="width:80%"></i><i></i><i></i><i style="width:50%"></i></div>
+            <div class="files">
+              <div><b>Roll sheet · 2nd Yr 1st Sem</b><span>.docx</span></div>
+              <div><span style="font-family:var(--body);font-size:14.5px;color:var(--ink)">Regular</span><span>32 students</span></div>
+              <div><span style="font-family:var(--body);font-size:14.5px;color:var(--ink)">Readd</span><span>2 students</span></div>
+              <div><span style="font-family:var(--body);font-size:14.5px;color:var(--ink)">Backlog, by course</span><span>5 students</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="copy">
+          <p class="eyebrow">Teachers</p>
+          <h3>Course teachers enter CT marks from a link in their email</h3>
+          <p>The academic office sets up the semester's courses and teachers. Each teacher gets an email, opens their own course and fills in class test marks for their students. Three-credit courses get four CTs and two-credit courses get three.</p>
+        </div>
+        <div class="visual">
+          <div class="mock">
+            <span class="example">Example data</span>
+            <h4>CSE2121 · Data Structures <span>3 credits · 4 CTs</span></h4>
+            <div class="tab-scroll">
+              <table class="ct">
+                <thead><tr><th>Roll</th><th>CT1</th><th>CT2</th><th>CT3</th><th>CT4</th></tr></thead>
+                <tbody>
+                  <tr><td>2438520101</td><td><span class="cell">18</span></td><td><span class="cell">17</span></td><td><span class="cell">19</span></td><td><span class="cell">16</span></td></tr>
+                  <tr><td>2438520102</td><td><span class="cell">15</span></td><td><span class="cell">18</span></td><td><span class="cell">14</span></td><td><span class="cell">17</span></td></tr>
+                  <tr><td>2438520103</td><td><span class="cell">12</span></td><td><span class="cell">13</span></td><td><span class="cell">16</span></td><td><span class="cell">&nbsp;</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Getting started</p>
+        <h2>Live in your department within a semester</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>We set up your department</h3><p>Your college name and letterhead, your fee rates, and your rules for attendance and eligibility.</p></div>
+        <div class="step"><h3>We bring in your records</h3><p>Students from your spreadsheets, past results from the university's sheets, and details from your old roll sheets.</p></div>
+        <div class="step"><h3>Your offices sign in</h3><p>Each office, teacher and student gets a login. We train your staff and stay on call through the first exam season.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Safe with your records</p>
+        <h2>Student data stays with the people who need it</h2>
+      </div>
+      <div class="trust">
+        <div><b>Access checked by the database</b><span>Each role's limits are enforced on the server, not just hidden on the screen.</span></div>
+        <div><b>Nothing quietly changes</b><span>Result corrections and fee entries keep a history of who changed what, and why.</span></div>
+        <div><b>Works on any phone or computer</b><span>Nothing to install. Students and teachers use the browser they already have.</span></div>
+        <div><b>Running in a real department</b><span>Built with, and used daily by, an engineering department's offices, teachers and students.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="demo" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <h2>See it working with <span class="mark">your</span> department's data</h2>
+          <p>Book a 30-minute demo. We'll walk through each office's screens and show how your current spreadsheets and result sheets come in.</p>
+        </div>
+        <div class="contact">
+          <div class="row"><div><small>Call or WhatsApp</small><p class="val" id="phone">+880 1628-070522</p></div><button class="copy-btn" type="button" data-copy="phone">Copy</button></div>
+          <div class="row"><div><small>Email</small><p class="val" id="email">imazharul175@gmail.com</p></div><button class="copy-btn" type="button" data-copy="email">Copy</button></div>
+          <p class="note">Setup fee plus a yearly plan per department. Ask us for a quote.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>DeptDesk · department management portal</span>
+    <span>Screens shown with example data. Built by <a href="/">Mazharul Islam</a>.</span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('[data-copy]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.copy);
+    const text = el.textContent.trim();
+    const done = () => { btn.textContent = 'Copied'; setTimeout(() => (btn.textContent = 'Copy'), 1500); };
+    const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try {
+      navigator.clipboard.writeText(text).then(done, select);
+    } catch (e) { select(); }
+  });
+});
+</script>
+</body>
+</html>

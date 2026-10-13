@@ -4,7 +4,7 @@
     .d1 { animation-delay: .1s; } .d2 { animation-delay: .35s; } .d3 { animation-delay: .6s; } .d4 { animation-delay: .85s; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
     .edge { stroke: #1D4E89; stroke-opacity: .22; stroke-width: 1.5; }
-    .node { fill: #ffffff; stroke: #1D4E89; stroke-width: 2.5; }
+    .node { fill: #ffffeff; stroke: #1D4E89; stroke-width: 2.5; }
     .core { fill: #1D4E89; }
     .packet { fill: #1D4E89; }
     .threat-edge { stroke: #c0392b; stroke-width: 1.5; stroke-dasharray: 5 5; animation: dash 1s linear infinite, blink 2.4s ease-in-out infinite; }

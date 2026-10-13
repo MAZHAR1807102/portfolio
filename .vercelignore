@@ -4,3 +4,4 @@ github-profile/
 .DS_Store
 .env*
 .gitignore
+blog/_template.html

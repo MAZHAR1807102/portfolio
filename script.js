@@ -2,6 +2,75 @@
   var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Blog post cards ---------- */
+  // Rendered from blog/posts.js before the reveal observer below picks them up.
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function formatDate(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    return isNaN(d) ? iso : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function postCard(post, base) {
+    var external = !post.slug && post.url;
+    var href = external ? post.url : base + post.slug + '.html';
+    var meta = '<time datetime="' + esc(post.date) + '">' + formatDate(post.date) + '</time>';
+    if (post.minutes) meta += '<span>' + post.minutes + ' min read</span>';
+    if (external) meta += '<span>' + esc(new URL(post.url).hostname.replace(/^www\./, '')) + ' ↗</span>';
+    var tags = (post.tags || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+    return '<a class="post reveal" href="' + esc(href) + '"' +
+      (external ? ' target="_blank" rel="noopener"' : '') + ' data-tags="' + esc((post.tags || []).join('|')) + '">' +
+      '<p class="post-meta">' + meta + '</p>' +
+      '<h3>' + esc(post.title) + '</h3>' +
+      '<p class="post-summary">' + esc(post.summary || '') + '</p>' +
+      (tags ? '<ul class="chips">' + tags + '</ul>' : '') +
+      '<span class="post-link">' + (external ? 'Read on ' + esc(new URL(post.url).hostname.replace(/^www\./, '')) : 'Read post') + ' →</span>' +
+      '</a>';
+  }
+  var posts = (window.POSTS || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+  document.querySelectorAll('[data-posts]').forEach(function (list) {
+    var limit = parseInt(list.dataset.limit, 10) || posts.length;
+    var shown = posts.slice(0, limit);
+    if (!shown.length) {
+      list.innerHTML = '<div class="posts-empty reveal"><h3>First posts are on the way</h3><p>I\'m writing up notes on research and teaching. Check back soon.</p></div>';
+      var more = list.parentNode.querySelector('.posts-more');
+      if (more) more.hidden = true;
+      return;
+    }
+    list.innerHTML = shown.map(function (p) { return postCard(p, list.dataset.base || ''); }).join('');
+  });
+
+  // Tag filter on the blog index page.
+  var filter = document.querySelector('[data-post-filter]');
+  if (filter && posts.length) {
+    var allTags = [];
+    posts.forEach(function (p) { (p.tags || []).forEach(function (t) { if (allTags.indexOf(t) < 0) allTags.push(t); }); });
+    if (allTags.length > 1) {
+      filter.innerHTML = ['All'].concat(allTags).map(function (t, i) {
+        return '<button class="pill" aria-pressed="' + (i === 0) + '" data-tag="' + esc(i ? t : '') + '">' + esc(t) + '</button>';
+      }).join('');
+      filter.addEventListener('click', function (e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        filter.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b === btn); });
+        var tag = btn.dataset.tag;
+        document.querySelectorAll('[data-posts] .post').forEach(function (card) {
+          card.hidden = tag && card.dataset.tags.split('|').indexOf(tag) < 0;
+        });
+      });
+    }
+  }
+
+  // Reading time on a post page, from the article's word count.
+  var readTime = document.querySelector('[data-reading-time]');
+  var prose = document.querySelector('.prose');
+  if (readTime && prose) {
+    var words = prose.textContent.trim().split(/\s+/).length;
+    readTime.textContent = Math.max(1, Math.round(words / 220)) + ' min read';
+  }
+
   /* ---------- Theme toggle ---------- */
   // The site opens in light (white) mode; dark is only used when chosen.
   document.getElementById('theme-toggle').addEventListener('click', function () {
@@ -35,7 +104,8 @@
   onScroll();
 
   /* ---------- Active nav link ---------- */
-  var links = Array.prototype.slice.call(menu.querySelectorAll('a'));
+  // Only in-page links; blog pages link back to sections on the home page.
+  var links = Array.prototype.slice.call(menu.querySelectorAll('a[href^="#"]'));
   var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
   if ('IntersectionObserver' in window) {
     var navObserver = new IntersectionObserver(function (entries) {
@@ -133,6 +203,24 @@
         showToast('Select the text to copy it');
       }
     });
+  });
+
+  /* ---------- Share: copy post link ---------- */
+  document.querySelectorAll('[data-copy-link]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(location.href).then(function () { showToast('Link copied to clipboard'); },
+          function () { showToast('Copy the link from the address bar'); });
+      } else {
+        showToast('Copy the link from the address bar');
+      }
+    });
+  });
+  document.querySelectorAll('[data-share]').forEach(function (a) {
+    var url = encodeURIComponent(location.href), title = encodeURIComponent(document.title);
+    a.href = a.dataset.share === 'linkedin'
+      ? 'https://www.linkedin.com/sharing/share-offsite/?url=' + url
+      : 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title;
   });
 
   /* ---------- Footer year ---------- */

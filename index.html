@@ -31,6 +31,7 @@
       <a href="#publications">Publications</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
+      <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -269,6 +270,19 @@
         <p class="section-sub">Software I've designed and built across web, mobile, desktop and graphics.</p>
       </header>
       <div class="projects">
+        <article class="project project-featured reveal">
+          <span class="project-tag">Featured · In daily use</span>
+          <h3>Department Management Portal</h3>
+          <p>A web portal that runs a university-affiliated engineering department: fees, attendance, CT marks, results and exam paperwork in one place. The HOD, finance, academic and exam offices, teachers and students each have their own login and see only their own work.</p>
+          <ul class="project-points">
+            <li>Imports the university's result sheets (PDF or Excel), works out course credits from the printed GPAs, and keeps a running CGPA that counts the best attempt.</li>
+            <li>A fee ledger with batch billing, partial payments and attendance fines that never bills a student twice.</li>
+            <li>Generates exam roll sheets as Word files in the university's layout, with Bangla names converted from old Bijoy-font files.</li>
+            <li>Teachers enter CT marks from an emailed sign-in link; students see results, dues and attendance on their phone.</li>
+            <li>Access for each role is enforced in the database, and every result correction is kept in a history.</li>
+          </ul>
+          <ul class="chips"><li>Next.js</li><li>React</li><li>TypeScript</li><li>Supabase</li><li>PostgreSQL</li><li>Tailwind CSS</li></ul>
+        </article>
         <article class="project reveal">
           <h3>Online Examination System</h3>
           <p>Lets institutions run MCQ and written exams remotely, with separate student, teacher and admin panels, question management and configurable timers.</p>
@@ -304,11 +318,25 @@
     </div>
   </section>
 
+  <!-- ===== Blog ===== -->
+  <!-- Posts come from blog/posts.js; the newest three are shown here. -->
+  <section id="blog" class="section">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <span class="section-num">05</span>
+        <h2>Blog</h2>
+        <p class="section-sub">Notes on research, teaching and life in computer science.</p>
+      </header>
+      <div class="posts" data-posts data-limit="3" data-base="blog/"></div>
+      <p class="posts-more reveal"><a class="btn btn-ghost" href="blog/">All posts →</a></p>
+    </div>
+  </section>
+
   <!-- ===== Contact ===== -->
   <section id="contact" class="section">
     <div class="wrap">
       <div class="contact-card reveal">
-        <span class="section-num">05</span>
+        <span class="section-num">06</span>
         <h2>Let's work together</h2>
         <p>I'm open to research collaborations and always happy to hear from students and colleagues.</p>
         <div class="contact-actions">
@@ -340,6 +368,7 @@
 
 <div class="toast" role="status" aria-live="polite"></div>
 
+<script src="blog/posts.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
